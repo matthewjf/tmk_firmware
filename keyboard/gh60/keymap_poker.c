@@ -32,10 +32,10 @@ const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     /* 3: numpad */
     KEYMAP( FN4,  F1,  F2,  F3,  F4,  F5, FN3,TRNS, F6,  F7,  F8,  F9, F10, FN1, \
-           TRNS,  NO,  NO,  NO,  NO,  NO,TRNS,TRNS, NO,   1,   2,   3,  NO,TRNS, \
-           TRNS,  NO,  NO,  NO,  NO,  NO,TRNS,TRNS, NO,   4,   5,   6,  NO,TRNS, \
            TRNS,  NO,  NO,  NO,  NO,  NO,TRNS,TRNS, NO,   7,   8,   9,  NO,TRNS, \
-           TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,  0,   0,   0,TRNS,PAUS),
+           TRNS,  NO,  NO,  NO,  NO,  NO,TRNS,TRNS, NO,   4,   5,   6,  NO,TRNS, \
+           TRNS,  NO,  NO,  NO,  NO,  NO,TRNS,TRNS, NO,   1,   2,   3,  NO,TRNS, \
+           TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,  0,   0,PDOT,TRNS,PAUS),
 
 };
 
@@ -61,7 +61,7 @@ const uint16_t PROGMEM fn_actions[] = {
     [2] = ACTION_LAYER_MOMENTARY(3), // numpad
     // hotkeys
     [3] = ACTION_MODS_KEY(MOD_LALT,KC_F4), // alt f4
-    [4] = ACTION_MODS_KEY(MOD_LCTL | MOD_LSFT, KC_DEL), // ctrl alt del 
+    [4] = ACTION_MODS_KEY(MOD_LCTL | MOD_LALT, KC_DEL), // ctrl alt del 
     [9] = ACTION_MODS_KEY(MOD_LCTL, KC_C), // copy
     [10] = ACTION_MODS_KEY(MOD_LCTL, KC_V), // paste
     // windows key shortcuts
@@ -99,17 +99,9 @@ static uint8_t shift_key_state;
 // pass in key state and keycode and it will reverse shift behavior
 void reverse_shift(uint8_t pressed, uint8_t key) {
     if (pressed) {
-	if (shift_key_state) {
-    	    // disable all shift modifiers
-	    del_mods(MOD_BIT(KC_LSHIFT));
- 	    del_mods(MOD_BIT(KC_RSHIFT));
-	    add_key(key);
-	    send_keyboard_report();
-        } else {
-	    add_mods(MOD_BIT(KC_LSHIFT));
-	    add_key(key);
-	    send_keyboard_report();
-        }
+	flip_mods(MOD_BIT(KC_LSHIFT)|MOD_BIT(KC_RSHIFT));
+	add_key(key);
+	send_keyboard_report();
     } else {
 	// check if a shift KEY is active
 	if (shift_key_state&MOD_BIT(KC_LSHIFT)) {

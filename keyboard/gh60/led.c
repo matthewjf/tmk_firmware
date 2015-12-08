@@ -22,7 +22,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 void led_set(uint8_t usb_led)
 {
-    if ((layer_state&0b1100) > 0b0000)
+    if ((layer_state&0b1100) > 0)
     {
         // Output high.
         DDRD |= (1<<4);
@@ -33,7 +33,7 @@ void led_set(uint8_t usb_led)
         PORTD &= ~(1<<4);
     }
 
-    if ((layer_state&0b0010) == 0b0010)
+    if ((layer_state&0b0010) > 0)
     {
         // Output high.
         DDRF |= (1<<0);
