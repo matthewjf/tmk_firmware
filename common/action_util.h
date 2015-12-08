@@ -39,7 +39,6 @@ void add_mods(uint8_t mods);
 void del_mods(uint8_t mods);
 void set_mods(uint8_t mods);
 void clear_mods(void);
-void flip_mods(uint8_t mods);
 
 /* weak modifier */
 uint8_t get_weak_mods(void);

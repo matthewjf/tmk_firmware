@@ -99,9 +99,17 @@ static uint8_t shift_key_state;
 // pass in key state and keycode and it will reverse shift behavior
 void reverse_shift(uint8_t pressed, uint8_t key) {
     if (pressed) {
-	flip_mods(MOD_BIT(KC_LSHIFT)|MOD_BIT(KC_RSHIFT));
-	add_key(key);
-	send_keyboard_report();
+	if (shift_key_state) {
+    	    // disable all shift modifiers
+	    del_mods(MOD_BIT(KC_LSHIFT));
+ 	    del_mods(MOD_BIT(KC_RSHIFT));
+	    add_key(key);
+	    send_keyboard_report();
+        } else {
+	    add_mods(MOD_BIT(KC_LSHIFT));
+	    add_key(key);
+	    send_keyboard_report();
+        }
     } else {
 	// check if a shift KEY is active
 	if (shift_key_state&MOD_BIT(KC_LSHIFT)) {

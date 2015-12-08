@@ -110,7 +110,6 @@ void add_mods(uint8_t mods) { real_mods |= mods; }
 void del_mods(uint8_t mods) { real_mods &= ~mods; }
 void set_mods(uint8_t mods) { real_mods = mods; }
 void clear_mods(void) { real_mods = 0; }
-void flip_mods(uint8_t mods) { real_mods ^= mods; }
 
 /* weak modifier */
 uint8_t get_weak_mods(void) { return weak_mods; }
