@@ -28,11 +28,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "print.h"
 #include "debug.h"
 #include "keymap.h"
+#include "action_layer.h"
 
-
+/*
 extern const uint8_t keymaps[][MATRIX_ROWS][MATRIX_COLS];
 extern const uint16_t fn_actions[];
-
+extern const uint16_t fn_actions_1[];
+extern const uint16_t fn_actions_2[];
+extern const uint16_t fn_actions_3[];
+*/
 
 /* GH60 keymap definition macro
  * K2C, K31 and  K3C are extra keys for ISO
@@ -82,3 +86,210 @@ extern const uint16_t fn_actions[];
 )
 
 #endif
+
+
+const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
+    
+    /* 0: workman */
+    KEYMAP(GRV,   1,   2,   3,   4,   5,  F5,HOME,   6,   7,   8,   9,   0, FN8, \
+           TAB,   Q,   D,   R,   W,   B, ESC, EQL,   J,   F,   U,   P,SCLN,BSLS, \
+           LCTL,  A,   S,   H,   T,   G, DEL, FN5,   Y,   N,   E,   O,   I,QUOT, \
+           FN3,   Z,   X,   M,   C,   V, FN6,RGUI,   K,   L,COMM, DOT,SLSH, FN4, \ 
+           CAPS,FN9,FN10,LALT, FN0,SPC,  ENT, ENT,BSPC, FN2,RALT,FN12,FN11,RCTL), 
+
+    /* 1: qwerty */
+    KEYMAP(TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS, \
+           TRNS,   Q,   W,   E,   R,   T,TRNS,TRNS,   Y,   U,   I,   O,   P,TRNS, \
+           TRNS,   A,   S,   D,   F,   G,TRNS,TRNS,   H,   J,   K,   L,SCLN,TRNS, \
+           LSFT,   Z,   X,   C,   V,   B,TRNS,TRNS,   N,   M,COMM, DOT,SLSH,RSFT, \
+           TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS),
+
+    /* 2: navigation */
+    KEYMAP( FN7,  F1,  F2,  F3,  F4,  F5, FN3,TRNS, F6,  F7,  F8,   F9,F10,FN11, \
+           TRNS,CAPS, FN6,FN14,  NO,  NO,TRNS,TRNS,FN16,FN17,FN15,FN18, NO,TRNS, \
+           TRNS,  NO, FN9,  NO,  NO,  NO,TRNS,TRNS,LEFT,DOWN,  UP,RGHT, NO,TRNS, \
+           TRNS,  NO,  NO,FN12,FN13,  NO,TRNS,TRNS,HOME,PGDN,PGUP, END, NO,TRNS, \
+           TRNS,MUTE, F12,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,PAUS),
+
+    /* 3: numbers */
+    KEYMAP( FN4,  F1,  F2,  F3,  F4,  F5, FN3,TRNS, F6,  F7,  F8,  F9, F10,FN10, \
+           TRNS,FN12,FN13,FN14,FN15,FN16,TRNS,TRNS,FN6, FN7, FN8, FN9,FN11,TRNS, \
+           TRNS,   1,   2,   3,   4,   5,TRNS,TRNS,  6,   7,   8,   9,   0,TRNS, \
+           TRNS,  NO,  NO,LBRC,RBRC,  NO,TRNS,TRNS, NO,  NO,TRNS,TRNS,TRNS,TRNS, \
+           TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,PDOT,TRNS,PAUS),
+
+};
+
+enum function_id {
+    LEFT_SHIFT,
+    RIGHT_SHIFT,
+    SHIFTED_MINS,
+};
+
+const uint16_t PROGMEM fn_actions[] = {
+    // layer functions
+    [0] = ACTION_LAYER_MOMENTARY(2), // navigation
+    [1] = ACTION_LAYER_TOGGLE(1), // qwerty
+    [2] = ACTION_LAYER_MOMENTARY(3), // numbers
+    [6] = ACTION_MODS_KEY(MOD_LALT,KC_F4), // alt f4
+    [7] = ACTION_MODS_KEY(MOD_LCTL | MOD_LALT, KC_DEL), // ctrl alt del     
+    [5] = ACTION_FUNCTION(SHIFTED_MINS),
+    [3] = ACTION_FUNCTION(LEFT_SHIFT),
+    [4] = ACTION_FUNCTION(RIGHT_SHIFT),
+    [8] = ACTION_LAYER_SET_CLEAR(0), // clear all layers
+    [9] = ACTION_MODS_KEY(MOD_LCTL, KC_C), // copy
+    [10] = ACTION_MODS_KEY(MOD_LCTL, KC_V), // paste
+    [11] = ACTION_MODS_KEY(MOD_LCTL | MOD_LSFT, KC_ESC), // task manager
+    [12] = ACTION_MODS_KEY(MOD_LCTL, KC_Z),
+};
+
+const uint16_t PROGMEM fn_actions_1[] = {
+    // 0-5 are reserved for layer 0 functions
+};
+
+const uint16_t PROGMEM fn_actions_2[] = {
+    // 0-5 are reserved for layer 0 functions
+    // windows key shortcuts
+    [13] = ACTION_MODS_KEY(MOD_RGUI, KC_E), // open computer
+    [14] = ACTION_MODS_KEY(MOD_RGUI, KC_R), // run
+    [15] = ACTION_MODS_KEY(MOD_RGUI, KC_UP), // gui up
+    [16] = ACTION_MODS_KEY(MOD_RGUI, KC_LEFT), // gui left
+    [17] = ACTION_MODS_KEY(MOD_RGUI, KC_DOWN), // gui down
+    [18] = ACTION_MODS_KEY(MOD_RGUI, KC_RIGHT), // gui right 
+    [6] = ACTION_MODS_KEY(MOD_RGUI, KC_D), // desktop
+    [7] = ACTION_MODS_KEY(MOD_RGUI, KC_R), // run
+    [8] = ACTION_MODS_KEY(MOD_RGUI, KC_E), // my computer
+    [9] = ACTION_MODS_KEY(MOD_RGUI, KC_S), // search
+    [10] = ACTION_MODS_KEY(MOD_RGUI, KC_T),
+    [11] = ACTION_LAYER_TOGGLE(1), // qwerty
+    [12] = ACTION_MODS_KEY(MOD_RGUI, KC_M), // minimize all
+};
+
+const uint16_t PROGMEM fn_actions_3[] = {
+    // 0-5 are reserved for layer 0 functions
+    // number actions
+    [12] = ACTION_MODS_KEY(MOD_LSFT, KC_1),
+    [13] = ACTION_MODS_KEY(MOD_LSFT, KC_2),
+    [14] = ACTION_MODS_KEY(MOD_LSFT, KC_3),
+    [15] = ACTION_MODS_KEY(MOD_LSFT, KC_4),
+    [16] = ACTION_MODS_KEY(MOD_LSFT, KC_5),
+    [6] = ACTION_MODS_KEY(MOD_LSFT, KC_6),
+    [7] = ACTION_MODS_KEY(MOD_LSFT, KC_7),
+    [8] = ACTION_MODS_KEY(MOD_LSFT, KC_8),
+    [9] = ACTION_MODS_KEY(MOD_LSFT, KC_9),
+    [11] = ACTION_MODS_KEY(MOD_LSFT, KC_0),
+    [10] = ACTION_MODS_KEY(MOD_RGUI, KC_M), // minimize all
+
+};
+
+
+static uint8_t shift_key_state;
+
+// pass in key state and keycode and it will reverse shift behavior
+void reverse_shift(uint8_t pressed, uint8_t key) {
+    if (pressed) {
+	if (shift_key_state) {
+    	    // disable all shift modifiers
+	    del_mods(MOD_BIT(KC_LSHIFT));
+ 	    del_mods(MOD_BIT(KC_RSHIFT));
+	    add_key(key);
+	    send_keyboard_report();
+        } else {
+	    add_mods(MOD_BIT(KC_LSHIFT));
+	    add_key(key);
+	    send_keyboard_report();
+        }
+    } else {
+	// check if a shift KEY is active
+	if (shift_key_state&MOD_BIT(KC_LSHIFT)) {
+	    // if so, then add the modifier back
+	    add_mods(MOD_BIT(KC_LSHIFT));
+	} else {
+	    // otherwise remove
+	    del_mods(MOD_BIT(KC_LSHIFT));
+	}
+        if (shift_key_state&MOD_BIT(KC_RSHIFT)) {
+	    add_mods(MOD_BIT(KC_RSHIFT));
+	} else {
+	    del_mods(MOD_BIT(KC_RSHIFT));
+	}
+	del_key(key);
+	send_keyboard_report();
+    }
+};
+
+void action_function(keyrecord_t *record, uint8_t id, uint8_t opt)
+{
+    switch (id) {
+	// special shift functions to track key states
+    	case LEFT_SHIFT:	
+	    if (record->event.pressed) {
+		shift_key_state |= MOD_BIT(KC_LSHIFT);
+		register_code(KC_LSHIFT);
+		send_keyboard_report();
+	    } else {
+		shift_key_state &= ~MOD_BIT(KC_LSHIFT);
+		unregister_code(KC_LSHIFT);
+		send_keyboard_report();
+	    }
+	    break;
+	case RIGHT_SHIFT:
+	    if (record->event.pressed) {
+		shift_key_state |= MOD_BIT(KC_RSHIFT);
+		register_code(KC_RSHIFT);
+		send_keyboard_report();		
+	    } else {
+		shift_key_state &= ~MOD_BIT(KC_RSHIFT);
+		unregister_code(KC_RSHIFT);
+		send_keyboard_report();		
+	    }
+	    break;
+
+	// number functions to invert shift modifier
+        case SHIFTED_MINS:
+            if (record->event.pressed) {
+	        reverse_shift(1, KC_MINS);
+	    } else {
+		reverse_shift(0, KC_MINS);
+	    }
+	    break;
+    }
+}
+
+#define FN_ACTIONS_SIZE     (sizeof(fn_actions)   / sizeof(fn_actions[0]))
+#define FN_ACTIONS_1_SIZE   (sizeof(fn_actions_1) / sizeof(fn_actions_1[0]))
+#define FN_ACTIONS_2_SIZE   (sizeof(fn_actions_2) / sizeof(fn_actions_2[0]))
+#define FN_ACTIONS_3_SIZE   (sizeof(fn_actions_3) / sizeof(fn_actions_3[0]))
+
+/*
+ * translates Fn keycode to action
+ * for some layers, use different translation table
+ */
+action_t keymap_fn_to_action(uint8_t keycode)
+{
+    uint8_t layer = biton32(layer_state);
+
+    action_t action;
+    action.code = ACTION_NO;
+
+    if (layer == 1 && FN_INDEX(keycode) < FN_ACTIONS_1_SIZE) {
+        action.code = pgm_read_word(&fn_actions_1[FN_INDEX(keycode)]);
+    }
+
+    if (layer == 2 && FN_INDEX(keycode) < FN_ACTIONS_2_SIZE) {
+        action.code = pgm_read_word(&fn_actions_2[FN_INDEX(keycode)]);
+    }
+
+    if (layer == 3 && FN_INDEX(keycode) < FN_ACTIONS_3_SIZE) {
+        action.code = pgm_read_word(&fn_actions_3[FN_INDEX(keycode)]);
+    }
+
+    // by default, use fn_actions from default layer 0
+    // this is needed to get mapping for same key, that was used switch to some layer,
+    // to have possibility to switch layers back
+    if (action.code == ACTION_NO && FN_INDEX(keycode) < FN_ACTIONS_SIZE) {
+        action.code = pgm_read_word(&fn_actions[FN_INDEX(keycode)]);
+    }
+
+    return action;
+}
