@@ -26,6 +26,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define MANUFACTURER    geekhack
 #define PRODUCT         GH60
 #define DESCRIPTION     t.m.k. keyboard firmware for GH60
+#define TAPPING_TERM 	200
 
 /* key matrix size */
 #define MATRIX_ROWS 5
@@ -37,7 +38,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 /* Set 0 if debouncing isn't needed */
 #define DEBOUNCE    5
 
-#define LED_BRIGHTNESS  20
+#define LED_BRIGHTNESS  2
 
 /* Mechanical locking support. Use KC_LCAP, KC_LNUM or KC_LSCR instead in keymap */
 #define LOCKING_SUPPORT_ENABLE
