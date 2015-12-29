@@ -105,17 +105,17 @@ const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
            TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS),
 
     /* 2: navigation */
-    KEYMAP( FN7,  F1,  F2,  F3,  F4,  F5, FN3,TRNS, F6,  F7,  F8,   F9,F10,FN11, \
-           TRNS,CAPS, FN6,FN14,  NO,  NO,TRNS,TRNS,FN16,FN17,FN15,FN18, NO,TRNS, \
-           TRNS,  NO, FN9,  NO,  NO,  NO,TRNS,TRNS,LEFT,DOWN,  UP,RGHT, NO,TRNS, \
-           TRNS,  NO,  NO,FN12,FN13,  NO,TRNS,TRNS,HOME,PGDN,PGUP, END, NO,TRNS, \
+    KEYMAP(FN19,  F1,  F2,  F3,  F4,  F5, FN3,TRNS, F6,  F7,  F8,   F9,F10, FN6, \
+           TRNS,CAPS,FN11,FN14,  NO,  NO,TRNS,TRNS,FN16,FN17,FN15,FN18, NO,TRNS, \
+           TRNS,  NO, FN9,  NO,FN10,  NO,TRNS,TRNS,LEFT,DOWN,  UP,RGHT, NO,TRNS, \
+           TRNS,  NO,  NO,FN12, FN8,  NO,TRNS,TRNS,HOME,PGDN,PGUP, END, NO,TRNS, \
            TRNS,MUTE, F12,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,PAUS),
 
     /* 3: numbers */
-    KEYMAP( FN4,  F1,  F2,  F3,  F4,  F5, FN3,TRNS, F6,  F7,  F8,  F9, F10,FN10, \
-           TRNS,FN12,FN13,FN14,FN15,FN16,TRNS,TRNS,FN6, FN7, FN8, FN9,FN11,TRNS, \
-           TRNS,   1,   2,   3,   4,   5,TRNS,TRNS,  6,   7,   8,   9,   0,TRNS, \
-           TRNS,  NO,  NO,LBRC,RBRC,  NO,TRNS,TRNS, NO,  NO,TRNS,TRNS,TRNS,TRNS, \
+    KEYMAP( FN4,  F1,  F2,  F3,  F4,  F5, FN3,TRNS,  F6,  F7,  F8,  F9, F10, FN6, \
+           TRNS,FN12,FN13,FN14,FN15,FN16,TRNS,TRNS,FN11, FN7, FN8, FN9,FN10,TRNS, \
+           TRNS,   1,   2,   3,   4,   5,TRNS,TRNS,   6,   7,   8,   9,   0,TRNS, \
+           TRNS,  NO,  NO,LBRC,RBRC,  NO,TRNS,TRNS,  NO,  NO,TRNS,TRNS,TRNS,TRNS, \
            TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,PDOT,TRNS,PAUS),
 
 };
@@ -132,7 +132,7 @@ const uint16_t PROGMEM fn_actions[] = {
     [1] = ACTION_LAYER_TOGGLE(1), // qwerty
     [2] = ACTION_LAYER_MOMENTARY(3), // numbers
     [6] = ACTION_MODS_KEY(MOD_LALT,KC_F4), // alt f4
-    [7] = ACTION_MODS_KEY(MOD_LCTL | MOD_LALT, KC_DEL), // ctrl alt del     
+    [7] = ACTION_MODS_KEY(MOD_LCTL | MOD_LALT, KC_DEL), // UNUSED ctrl alt del     
     [5] = ACTION_FUNCTION(SHIFTED_MINS),
     [3] = ACTION_FUNCTION(LEFT_SHIFT),
     [4] = ACTION_FUNCTION(RIGHT_SHIFT),
@@ -156,13 +156,21 @@ const uint16_t PROGMEM fn_actions_2[] = {
     [16] = ACTION_MODS_KEY(MOD_RGUI, KC_LEFT), // gui left
     [17] = ACTION_MODS_KEY(MOD_RGUI, KC_DOWN), // gui down
     [18] = ACTION_MODS_KEY(MOD_RGUI, KC_RIGHT), // gui right 
-    [6] = ACTION_MODS_KEY(MOD_RGUI, KC_D), // desktop
+    [11] = ACTION_MODS_KEY(MOD_RGUI, KC_D), // desktop
     [7] = ACTION_MODS_KEY(MOD_RGUI, KC_R), // run
     [8] = ACTION_MODS_KEY(MOD_RGUI, KC_E), // my computer
     [9] = ACTION_MODS_KEY(MOD_RGUI, KC_S), // search
-    [10] = ACTION_MODS_KEY(MOD_RGUI, KC_T),
-    [11] = ACTION_LAYER_TOGGLE(1), // qwerty
+    [10] = ACTION_MODS_KEY(MOD_RGUI, KC_T), // cycle tabs
+    [6] = ACTION_LAYER_TOGGLE(1), // qwerty
     [12] = ACTION_MODS_KEY(MOD_RGUI, KC_M), // minimize all
+    [13] = ACTION_MODS_KEY(MOD_RGUI, KC_A), // UNUSED action center / shifted - 
+    [19] = ACTION_MODS_KEY(MOD_LCTL | MOD_LALT, KC_DEL), // ctl alt del
+    // word
+    [20] = ACTION_MODS_KEY(MOD_LCTL, KC_C), // copy
+    [21] = ACTION_MODS_KEY(MOD_LCTL, KC_V), // paste
+    [22] = ACTION_MODS_KEY(MOD_LCTL, KC_X), // cut
+    [23] = ACTION_MODS_KEY(MOD_LCTL, KC_U), // undo
+    [24] = ACTION_MODS_KEY(MOD_LCTL, KC_Y), // redo
 };
 
 const uint16_t PROGMEM fn_actions_3[] = {
@@ -173,13 +181,12 @@ const uint16_t PROGMEM fn_actions_3[] = {
     [14] = ACTION_MODS_KEY(MOD_LSFT, KC_3),
     [15] = ACTION_MODS_KEY(MOD_LSFT, KC_4),
     [16] = ACTION_MODS_KEY(MOD_LSFT, KC_5),
-    [6] = ACTION_MODS_KEY(MOD_LSFT, KC_6),
+    [11] = ACTION_MODS_KEY(MOD_LSFT, KC_6),
     [7] = ACTION_MODS_KEY(MOD_LSFT, KC_7),
     [8] = ACTION_MODS_KEY(MOD_LSFT, KC_8),
     [9] = ACTION_MODS_KEY(MOD_LSFT, KC_9),
-    [11] = ACTION_MODS_KEY(MOD_LSFT, KC_0),
-    [10] = ACTION_MODS_KEY(MOD_RGUI, KC_M), // minimize all
-
+    [10] = ACTION_MODS_KEY(MOD_LSFT, KC_0),
+    [6] = ACTION_LAYER_TOGGLE(1), // qwerty
 };
 
 
