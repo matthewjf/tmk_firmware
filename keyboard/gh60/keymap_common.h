@@ -92,7 +92,7 @@ const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     
     /* 0: workman */
     KEYMAP(GRV,   1,   2,   3,   4,   5,  F5,HOME,   6,   7,   8,   9,   0, FN8, \
-           TAB,   Q,   D,   R,   W,   B, ESC, EQL,   J,   F,   U,   P,SCLN,BSLS, \
+           TAB,   Q,   D,   R,   W,   B, ESC, EQL,   J,   F,   U,   P,FN13,BSLS, \
            LCTL,  A,   S,   H,   T,   G, DEL, FN5,   Y,   N,   E,   O,   I,QUOT, \
            FN3,   Z,   X,   M,   C,   V, FN6,RGUI,   K,   L,COMM, DOT,SLSH, FN4, \ 
            CAPS,FN9,FN10,LALT, FN0,SPC,  ENT, ENT,BSPC, FN2,RALT,FN12,FN11,RCTL), 
@@ -124,6 +124,7 @@ enum function_id {
     LEFT_SHIFT,
     RIGHT_SHIFT,
     SHIFTED_MINS,
+    SHIFTED_SCLN,
 };
 
 const uint16_t PROGMEM fn_actions[] = {
@@ -134,6 +135,7 @@ const uint16_t PROGMEM fn_actions[] = {
     [6] = ACTION_MODS_KEY(MOD_LALT,KC_F4), // alt f4
     [7] = ACTION_MODS_KEY(MOD_LCTL | MOD_LALT, KC_DEL), // UNUSED ctrl alt del     
     [5] = ACTION_FUNCTION(SHIFTED_MINS),
+    [13] = ACTION_FUNCTION(SHIFTED_SCLN),
     [3] = ACTION_FUNCTION(LEFT_SHIFT),
     [4] = ACTION_FUNCTION(RIGHT_SHIFT),
     [8] = ACTION_LAYER_SET_CLEAR(0), // clear all layers
@@ -252,13 +254,20 @@ void action_function(keyrecord_t *record, uint8_t id, uint8_t opt)
 	    }
 	    break;
 
-	// number functions to invert shift modifier
+	// invert shift modifier
         case SHIFTED_MINS:
             if (record->event.pressed) {
 	        reverse_shift(1, KC_MINS);
 	    } else {
 		reverse_shift(0, KC_MINS);
 	    }
+	    break;
+	case SHIFTED_SCLN:
+	    if (record->event.pressed) {
+	        reverse_shift(1, KC_SCLN);
+	    } else {
+	        reverse_shift(0, KC_SCLN);
+	    }	
 	    break;
     }
 }
