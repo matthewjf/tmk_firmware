@@ -93,9 +93,9 @@ const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     /* 0: workman */
     KEYMAP(GRV,   1,   2,   3,   4,   5,  F5,HOME,   6,   7,   8,   9,   0, FN8, \
            TAB,   Q,   D,   R,   W,   B, ESC, EQL,   J,   F,   U,   P,FN13,BSLS, \
-           LCTL,  A,   S,   H,   T,   G, DEL, FN5,   Y,   N,   E,   O,   I,QUOT, \
-           FN3,   Z,   X,   M,   C,   V, FN6,RGUI,   K,   L,COMM, DOT,SLSH, FN4, \ 
-           CAPS,FN9,FN10,LALT, FN0,SPC,  ENT, ENT,BSPC, FN2,RALT,FN12,FN11,RCTL), 
+           RGUI,  A,   S,   H,   T,   G, DEL,MINS,   Y,   N,   E,   O,   I,QUOT, \
+           LSFT,  Z,   X,   M,   C,   V, FN6,LCTL,   K,   L,COMM, DOT,SLSH,RSFT, \
+           CAPS,FN9,FN10,LALT, FN0, SPC, ENT, ENT,BSPC, FN2,RALT, FN5,FN11,RCTL), 
 
     /* 1: qwerty */
     KEYMAP(TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS, \
@@ -105,44 +105,35 @@ const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
            TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS),
 
     /* 2: navigation */
-    KEYMAP(FN19,  F1,  F2,  F3,  F4,  F5, FN3,TRNS, F6,  F7,  F8,   F9,F10, FN6, \
+    KEYMAP(FN19,  F1,  F2,  F3,  F4,  F5,TRNS,FN25, F6,  F7,  F8,   F9,F10, FN6, \
            TRNS,CAPS,FN11,FN14,  NO,  NO,TRNS,TRNS,FN16,FN17,FN15,FN18, NO,TRNS, \
            TRNS,  NO, FN9,  NO,FN10,  NO,TRNS,TRNS,LEFT,DOWN,  UP,RGHT, NO,TRNS, \
-           TRNS,  NO,  NO,FN12, FN8,  NO,TRNS,TRNS,HOME,PGDN,PGUP, END, NO,TRNS, \
+           TRNS,FN23,FN22,FN12, FN8,FN21,TRNS,TRNS,HOME,PGDN,PGUP, END, NO,TRNS, \
            TRNS,MUTE, F12,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,PAUS),
 
     /* 3: numbers */
-    KEYMAP( FN4,  F1,  F2,  F3,  F4,  F5, FN3,TRNS,  F6,  F7,  F8,  F9, F10, FN6, \
-           TRNS,FN12,FN13,FN14,FN15,FN16,TRNS,TRNS,FN11, FN7, FN8, FN9,FN10,TRNS, \
+    KEYMAP( FN4,  F1,  F2,  F3,  F4,  F5,TRNS,TRNS,  F6,  F7,  F8,  F9, F10, FN6, \
+           TRNS,FN12,FN13,FN14,FN15,FN16,TRNS,TRNS,FN11, FN7, FN8,SCLN,SCLN,TRNS, \
            TRNS,   1,   2,   3,   4,   5,TRNS,TRNS,   6,   7,   8,   9,   0,TRNS, \
-           TRNS,  NO,  NO,LBRC,RBRC,  NO,TRNS,TRNS,  NO,  NO,TRNS,TRNS,TRNS,TRNS, \
+           TRNS,BSLS,FN17,LBRC,RBRC,FN18,TRNS,TRNS, FN9,FN10,TRNS,TRNS,TRNS,TRNS, \
            TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,PDOT,TRNS,TRNS),
 
 };
 
-enum function_id {
-    LEFT_SHIFT,
-    RIGHT_SHIFT,
-    SHIFTED_MINS,
-    SHIFTED_SCLN,
-};
-
 const uint16_t PROGMEM fn_actions[] = {
     // layer functions
-    [0] = ACTION_LAYER_MOMENTARY(2), // navigation
-    [1] = ACTION_LAYER_TOGGLE(1), // qwerty
-    [2] = ACTION_LAYER_MOMENTARY(3), // numbers
-    [6] = ACTION_MODS_KEY(MOD_LALT,KC_F4), // alt f4
+    [0] = ACTION_LAYER_MOMENTARY(2), 			// navigation
+    [1] = ACTION_LAYER_TOGGLE(1), 			// qwerty
+    [2] = ACTION_LAYER_MOMENTARY(3),			// numbers
+    [6] = ACTION_MODS_KEY(MOD_LALT,KC_F4),		// alt f4
     [7] = ACTION_MODS_KEY(MOD_LCTL | MOD_LALT, KC_DEL), // UNUSED ctrl alt del     
-    [5] = ACTION_FUNCTION(SHIFTED_MINS),
-    [13] = ACTION_FUNCTION(SHIFTED_SCLN),
-    [3] = ACTION_FUNCTION(LEFT_SHIFT),
-    [4] = ACTION_FUNCTION(RIGHT_SHIFT),
-    [8] = ACTION_LAYER_SET_CLEAR(0), // clear all layers
-    [9] = ACTION_MODS_KEY(MOD_LCTL, KC_C), // copy
-    [10] = ACTION_MODS_KEY(MOD_LCTL, KC_V), // paste
-    [11] = ACTION_MODS_KEY(MOD_LCTL | MOD_LSFT, KC_ESC), // task manager
-    [12] = ACTION_MODS_KEY(MOD_LCTL, KC_Z),
+    [5] = ACTION_LAYER_TOGGLE(2), 			// navigation
+    [13] = ACTION_MODS_KEY(MOD_LSFT, KC_SCLN),
+    [8] = ACTION_LAYER_SET_CLEAR(0), 			// clear all layers
+    [9] = ACTION_MODS_KEY(MOD_LCTL, KC_C), 		// copy
+    [10] = ACTION_MODS_KEY(MOD_LCTL, KC_V), 		// paste
+    [11] = ACTION_MODS_KEY(MOD_LCTL | MOD_LSFT, KC_ESC),// task manager
+    [12] = ACTION_MODS_KEY(MOD_LCTL, KC_Z), 		// undo
 };
 
 const uint16_t PROGMEM fn_actions_1[] = {
@@ -151,28 +142,30 @@ const uint16_t PROGMEM fn_actions_1[] = {
 
 const uint16_t PROGMEM fn_actions_2[] = {
     // 0-5 are reserved for layer 0 functions
+
     // windows key shortcuts
-    [13] = ACTION_MODS_KEY(MOD_RGUI, KC_E), // open computer
-    [14] = ACTION_MODS_KEY(MOD_RGUI, KC_R), // run
-    [15] = ACTION_MODS_KEY(MOD_RGUI, KC_UP), // gui up
-    [16] = ACTION_MODS_KEY(MOD_RGUI, KC_LEFT), // gui left
-    [17] = ACTION_MODS_KEY(MOD_RGUI, KC_DOWN), // gui down
-    [18] = ACTION_MODS_KEY(MOD_RGUI, KC_RIGHT), // gui right 
-    [11] = ACTION_MODS_KEY(MOD_RGUI, KC_D), // desktop
-    [7] = ACTION_MODS_KEY(MOD_RGUI, KC_R), // run
-    [8] = ACTION_MODS_KEY(MOD_RGUI, KC_E), // my computer
-    [9] = ACTION_MODS_KEY(MOD_RGUI, KC_S), // search
-    [10] = ACTION_MODS_KEY(MOD_RGUI, KC_T), // cycle tabs
-    [6] = ACTION_LAYER_TOGGLE(1), // qwerty
-    [12] = ACTION_MODS_KEY(MOD_RGUI, KC_M), // minimize all
-    [13] = ACTION_MODS_KEY(MOD_RGUI, KC_A), // UNUSED action center / shifted - 
-    [19] = ACTION_MODS_KEY(MOD_LCTL | MOD_LALT, KC_DEL), // ctl alt del
+    [13] = ACTION_MODS_KEY(MOD_RGUI, KC_E), 		// open computer
+    [14] = ACTION_MODS_KEY(MOD_RGUI, KC_R), 		// run
+    [15] = ACTION_MODS_KEY(MOD_RGUI, KC_UP), 		// gui up
+    [16] = ACTION_MODS_KEY(MOD_RGUI, KC_LEFT), 		// gui left
+    [17] = ACTION_MODS_KEY(MOD_RGUI, KC_DOWN), 		// gui down
+    [18] = ACTION_MODS_KEY(MOD_RGUI, KC_RIGHT), 	// gui right 
+    [11] = ACTION_MODS_KEY(MOD_RGUI, KC_D), 		// desktop
+    [7] = ACTION_MODS_KEY(MOD_RGUI, KC_R), 		// run
+    [8] = ACTION_MODS_KEY(MOD_RGUI, KC_E), 		// my computer
+    [9] = ACTION_MODS_KEY(MOD_RGUI, KC_S), 		// search
+    [10] = ACTION_MODS_KEY(MOD_RGUI, KC_T), 		// cycle tabs
+    [6] = ACTION_LAYER_TOGGLE(1), 			// qwerty
+    [12] = ACTION_MODS_KEY(MOD_RGUI, KC_M), 		// minimize all
+    [13] = ACTION_MODS_KEY(MOD_RGUI, KC_A), 		// UNUSED action center / shifted - 
+    [19] = ACTION_MODS_KEY(MOD_LCTL | MOD_LALT, KC_DEL),// ctl alt del
     // word
-    [20] = ACTION_MODS_KEY(MOD_LCTL, KC_C), // copy
-    [21] = ACTION_MODS_KEY(MOD_LCTL, KC_V), // paste
-    [22] = ACTION_MODS_KEY(MOD_LCTL, KC_X), // cut
-    [23] = ACTION_MODS_KEY(MOD_LCTL, KC_U), // undo
-    [24] = ACTION_MODS_KEY(MOD_LCTL, KC_Y), // redo
+    [20] = ACTION_MODS_KEY(MOD_LCTL, KC_C), 		// copy
+    [21] = ACTION_MODS_KEY(MOD_LCTL, KC_V), 		// paste
+    [22] = ACTION_MODS_KEY(MOD_LCTL, KC_X), 		// cut
+    [23] = ACTION_MODS_KEY(MOD_LCTL, KC_Z), 		// undo
+    [24] = ACTION_MODS_KEY(MOD_LCTL, KC_Y), 		// redo
+    [25] = ACTION_MODS_KEY(MOD_LCTL | MOD_RGUI, KC_F4), // close virtual desktop
 };
 
 const uint16_t PROGMEM fn_actions_3[] = {
@@ -188,89 +181,11 @@ const uint16_t PROGMEM fn_actions_3[] = {
     [8] = ACTION_MODS_KEY(MOD_LSFT, KC_8),
     [9] = ACTION_MODS_KEY(MOD_LSFT, KC_9),
     [10] = ACTION_MODS_KEY(MOD_LSFT, KC_0),
-    [6] = ACTION_LAYER_TOGGLE(1), // qwerty
+    [6] = ACTION_LAYER_TOGGLE(1), 			// qwerty
+    [17] = ACTION_MODS_KEY(MOD_LSFT, KC_BSLS),
+    [18] = ACTION_MODS_KEY(MOD_LSFT, KC_MINS),
 };
 
-
-static uint8_t shift_key_state;
-
-// pass in key state and keycode and it will reverse shift behavior
-void reverse_shift(uint8_t pressed, uint8_t key) {
-    if (pressed) {
-	if (shift_key_state) {
-    	    // disable all shift modifiers
-	    del_mods(MOD_BIT(KC_LSHIFT));
- 	    del_mods(MOD_BIT(KC_RSHIFT));
-	    add_key(key);
-	    send_keyboard_report();
-        } else {
-	    add_mods(MOD_BIT(KC_LSHIFT));
-	    add_key(key);
-	    send_keyboard_report();
-        }
-    } else {
-	// check if a shift KEY is active
-	if (shift_key_state&MOD_BIT(KC_LSHIFT)) {
-	    // if so, then add the modifier back
-	    add_mods(MOD_BIT(KC_LSHIFT));
-	} else {
-	    // otherwise remove
-	    del_mods(MOD_BIT(KC_LSHIFT));
-	}
-        if (shift_key_state&MOD_BIT(KC_RSHIFT)) {
-	    add_mods(MOD_BIT(KC_RSHIFT));
-	} else {
-	    del_mods(MOD_BIT(KC_RSHIFT));
-	}
-	del_key(key);
-	send_keyboard_report();
-    }
-};
-
-void action_function(keyrecord_t *record, uint8_t id, uint8_t opt)
-{
-    switch (id) {
-	// special shift functions to track key states
-    	case LEFT_SHIFT:	
-	    if (record->event.pressed) {
-		shift_key_state |= MOD_BIT(KC_LSHIFT);
-		register_code(KC_LSHIFT);
-		send_keyboard_report();
-	    } else {
-		shift_key_state &= ~MOD_BIT(KC_LSHIFT);
-		unregister_code(KC_LSHIFT);
-		send_keyboard_report();
-	    }
-	    break;
-	case RIGHT_SHIFT:
-	    if (record->event.pressed) {
-		shift_key_state |= MOD_BIT(KC_RSHIFT);
-		register_code(KC_RSHIFT);
-		send_keyboard_report();		
-	    } else {
-		shift_key_state &= ~MOD_BIT(KC_RSHIFT);
-		unregister_code(KC_RSHIFT);
-		send_keyboard_report();		
-	    }
-	    break;
-
-	// invert shift modifier
-        case SHIFTED_MINS:
-            if (record->event.pressed) {
-	        reverse_shift(1, KC_MINS);
-	    } else {
-		reverse_shift(0, KC_MINS);
-	    }
-	    break;
-	case SHIFTED_SCLN:
-	    if (record->event.pressed) {
-	        reverse_shift(1, KC_SCLN);
-	    } else {
-	        reverse_shift(0, KC_SCLN);
-	    }	
-	    break;
-    }
-}
 
 #define FN_ACTIONS_SIZE     (sizeof(fn_actions)   / sizeof(fn_actions[0]))
 #define FN_ACTIONS_1_SIZE   (sizeof(fn_actions_1) / sizeof(fn_actions_1[0]))
